@@ -1,0 +1,11 @@
+{
+  "data": {
+    "full_name": "RAJ KUMAR SHARMA",
+    "pan_status": "VALID",
+    "name_match_score": 95,
+    "valid": true,
+    "pan_number": "ABCDE1234F"
+  },
+  "status_code": 200,
+  "success": true
+}

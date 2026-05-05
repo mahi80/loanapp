@@ -1,0 +1,16 @@
+{
+  "creditScore": 735,
+  "creditSummary": {
+    "totalAccounts": 5,
+    "activeAccounts": 2,
+    "closedAccounts": 3,
+    "totalOutstanding": 2545000,
+    "oldestAccount": "2018-06-15"
+  },
+  "delinquencyInfo": {
+    "hasDelinquency": false,
+    "maxDPD": 0,
+    "delinquentAccounts": 0
+  },
+  "enquiryCount": 3
+}

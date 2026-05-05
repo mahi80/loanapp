@@ -1,0 +1,35 @@
+# Production overrides - uses Azure managed services via env vars
+# Usage: docker compose -f docker-compose.yml -f docker-compose.prod.yml up
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "4"]
+    environment:
+      - ENVIRONMENT=production
+    # In prod, remove volume mounts for source code
+    volumes: []
+
+  # In production, these services are replaced by Azure managed services.
+  # Remove or scale to 0 the containers below and use Azure endpoints via .env.
+  postgres:
+    deploy:
+      replicas: 0  # Use Azure Database for PostgreSQL
+
+  redis:
+    deploy:
+      replicas: 0  # Use Azure Cache for Redis
+
+  qdrant:
+    deploy:
+      replicas: 0  # Use Qdrant on AKS or Azure AI Search
+
+  minio:
+    deploy:
+      replicas: 0  # Use Azure Blob Storage
+
+  grafana:
+    deploy:
+      replicas: 0  # Use Azure Monitor + Grafana on AKS

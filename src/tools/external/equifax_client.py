@@ -1,0 +1,40 @@
+from __future__ import annotations
+
+from src.config import get_settings
+from src.tools.external.base_client import BaseExternalClient, CreditDataResponse
+
+settings = get_settings()
+
+
+class EquifaxClient(BaseExternalClient):
+    provider_name = "equifax"
+
+    async def _call_api(self, pan: str, name: str, dob: str) -> CreditDataResponse:
+        if settings.is_development:
+            mock = self._load_mock("equifax_response")
+            return CreditDataResponse(success=True, provider=self.provider_name, data=mock, raw_response=mock)
+
+        response = await self._make_request(
+            method="POST",
+            url="https://api.equifax.co.in/credit-report",
+            headers={
+                "Authorization": f"Bearer {settings.equifax_api_key}",
+                "Content-Type": "application/json",
+            },
+            json={
+                "pan": pan,
+                "name": name,
+                "dob": dob,
+            },
+        )
+        data = response.json()
+        return CreditDataResponse(
+            success=True,
+            provider=self.provider_name,
+            data={
+                "score": data.get("score"),
+                "accounts": data.get("accounts", []),
+                "enquiries": data.get("enquiries", []),
+            },
+            raw_response=data,
+        )

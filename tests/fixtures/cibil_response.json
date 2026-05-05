@@ -1,0 +1,15 @@
+{
+  "score": 742,
+  "repaymentHistory": [
+    {"account": "Home Loan", "status": "current", "dpd": 0, "months": 48},
+    {"account": "Credit Card", "status": "current", "dpd": 0, "months": 36},
+    {"account": "Personal Loan", "status": "closed", "dpd": 0, "months": 24}
+  ],
+  "activeAccounts": [
+    {"type": "Home Loan", "balance": 2500000, "emi": 25000, "sanctioned": 3500000},
+    {"type": "Credit Card", "limit": 200000, "outstanding": 45000}
+  ],
+  "enquiryCount": 3,
+  "totalOutstanding": 2545000,
+  "reportDate": "2026-04-01"
+}

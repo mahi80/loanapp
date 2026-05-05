@@ -1,0 +1,41 @@
+model_list:
+  # Primary: Claude Opus 4.6 via Azure AI (Sweden Central)
+  - model_name: opus-primary
+    litellm_params:
+      model: azure/claude-opus-4-6
+      api_base: "os.environ/AZURE_AI_API_BASE"
+      api_key: "os.environ/AZURE_AI_API_KEY"
+      api_version: "os.environ/AZURE_AI_API_VERSION"
+
+  # Fallback: GPT-5.2 via Azure OpenAI (East US 2)
+  - model_name: gpt4o-fallback
+    litellm_params:
+      model: azure/gpt-5.2-chat
+      api_base: "os.environ/AZURE_API_BASE"
+      api_key: "os.environ/AZURE_API_KEY"
+      api_version: "os.environ/AZURE_API_VERSION"
+
+  # Embeddings: text-embedding-3-large via Azure OpenAI (East US 2)
+  - model_name: text-embedding
+    litellm_params:
+      model: azure/text-embedding-3-large
+      api_base: "os.environ/AZURE_API_BASE"
+      api_key: "os.environ/AZURE_API_KEY"
+      api_version: "os.environ/AZURE_EMBED_API_VERSION"
+
+router_settings:
+  routing_strategy: latency-based-routing
+  num_retries: 3
+  timeout: 120
+  fallbacks:
+    - opus-primary:
+        - gpt4o-fallback
+
+litellm_settings:
+  drop_params: true
+  request_timeout: 120
+  num_retries: 3
+
+general_settings:
+  background_health_checks: false
+  enable_pre_call_checks: false

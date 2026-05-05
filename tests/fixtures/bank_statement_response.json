@@ -1,0 +1,24 @@
+{
+  "monthlyIncome": [
+    {"month": "2026-01", "amount": 75000},
+    {"month": "2026-02", "amount": 75000},
+    {"month": "2026-03", "amount": 78000}
+  ],
+  "salaryCredits": [
+    {"date": "2026-01-01", "amount": 75000, "description": "SALARY-TCS LTD"},
+    {"date": "2026-02-01", "amount": 75000, "description": "SALARY-TCS LTD"},
+    {"date": "2026-03-01", "amount": 78000, "description": "SALARY-TCS LTD"}
+  ],
+  "recurringDebits": [
+    {"description": "HOME LOAN EMI", "amount": 25000, "frequency": "monthly"},
+    {"description": "ELECTRICITY BILL", "amount": 2500, "frequency": "monthly"},
+    {"description": "INSURANCE PREMIUM", "amount": 5000, "frequency": "monthly"}
+  ],
+  "averageBalance": 125000,
+  "cashFlowSummary": {
+    "avgMonthlyInflow": 82000,
+    "avgMonthlyOutflow": 58000,
+    "netCashFlow": 24000
+  },
+  "bouncedCheques": 0
+}

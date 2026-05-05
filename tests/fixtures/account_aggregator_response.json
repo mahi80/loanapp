@@ -1,0 +1,27 @@
+{
+  "accounts": [
+    {
+      "type": "SAVINGS",
+      "bank": "HDFC Bank",
+      "accountNumber": "XXXX1234",
+      "balance": 125000
+    }
+  ],
+  "deposits": [
+    {
+      "type": "FIXED_DEPOSIT",
+      "bank": "HDFC Bank",
+      "amount": 500000,
+      "maturityDate": "2027-06-15"
+    }
+  ],
+  "recurringTransactions": [
+    {"description": "SALARY", "amount": 75000, "frequency": "monthly"},
+    {"description": "HOME LOAN EMI", "amount": 25000, "frequency": "monthly"}
+  ],
+  "transactionSummary": {
+    "totalCredits": 246000,
+    "totalDebits": 174000,
+    "period": "2026-01 to 2026-03"
+  }
+}

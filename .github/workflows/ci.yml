@@ -1,0 +1,88 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install ruff
+        run: pip install ruff
+
+      - name: Lint
+        run: ruff check src/ tests/
+
+      - name: Format check
+        run: ruff format --check src/ tests/
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install security tools
+        run: pip install bandit pip-audit
+
+      - name: Bandit security scan
+        run: bandit -r src/ -ll
+
+      - name: Check for credential leaks
+        run: |
+          if git ls-files '*.env' '.env.*' | grep -q .; then
+            echo "ERROR: .env files are tracked in git!"
+            exit 1
+          fi
+
+      - name: Dependency audit
+        run: |
+          pip install -r requirements.txt
+          pip-audit || true
+
+  test:
+    runs-on: ubuntu-latest
+    env:
+      ENVIRONMENT: development
+      DATABASE_URL: sqlite+aiosqlite:///test.db
+      MEM0_API_KEY: ""
+      REDIS_URL: redis://localhost:6379
+      QDRANT_URL: http://localhost:6333
+      LITELLM_BASE_URL: http://localhost:4000
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run tests
+        run: pytest tests/ -v --tb=short -x
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t loan-underwriting:test .
+
+      - name: Verify image
+        run: docker run --rm loan-underwriting:test python -c "from src.config import Settings; print('OK')"

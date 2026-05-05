@@ -1,0 +1,67 @@
+# LangGraph & LLM
+langgraph>=0.4.0
+langgraph-checkpoint-postgres>=2.0.0
+langchain-openai>=0.3.0
+langchain-anthropic>=0.3.0
+langchain-core>=0.3.0
+
+# Web Framework
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+python-multipart>=0.0.12
+
+# Database
+sqlalchemy[asyncio]>=2.0.35
+asyncpg>=0.30.0
+alembic>=1.14.0
+psycopg2-binary>=2.9.10
+psycopg[binary]>=3.2.0
+
+# Cache
+redis>=5.2.0
+
+# Vector Store
+qdrant-client>=1.12.0
+
+# Data Validation
+pydantic>=2.10.0
+pydantic-settings>=2.6.0
+
+# HTTP Client
+httpx>=0.28.0
+
+# Document Storage
+azure-storage-blob>=12.24.0
+
+# OCR / Document Intelligence
+azure-ai-documentintelligence>=1.0.0
+
+# Auth
+authlib>=1.4.0
+python-jose[cryptography]>=3.3.0
+
+# Monitoring
+prometheus-client>=0.21.0
+prometheus-fastapi-instrumentator>=7.0.0
+
+# Utilities
+eval_type_backport>=0.2.0
+python-dotenv>=1.0.1
+tenacity>=9.0.0
+structlog>=24.4.0
+orjson>=3.10.0
+
+# PDF Generation
+reportlab>=4.1.0
+
+# Document forensics
+pikepdf>=8.0.0
+Pillow>=10.4.0
+
+# Testing
+pytest>=8.3.0
+pytest-asyncio>=0.24.0
+pytest-cov>=6.0.0
+httpx>=0.28.0
+factory-boy>=3.3.0
+aiosqlite>=0.20.0

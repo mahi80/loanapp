@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" fill="none">
+  <!-- Background glow -->
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#D4A853" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#D4A853" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4A853"/>
+      <stop offset="100%" stop-color="#B8860B"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.08)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0.02)"/>
+    </linearGradient>
+  </defs>
+
+  <ellipse cx="300" cy="200" rx="250" ry="180" fill="url(#glow)"/>
+
+  <!-- Central document card -->
+  <rect x="220" y="80" width="160" height="200" rx="12" fill="url(#cardGrad)" stroke="rgba(212,168,83,0.3)" stroke-width="1"/>
+  <rect x="240" y="100" width="80" height="8" rx="4" fill="rgba(212,168,83,0.4)"/>
+  <rect x="240" y="116" width="120" height="6" rx="3" fill="rgba(255,255,255,0.1)"/>
+  <rect x="240" y="128" width="100" height="6" rx="3" fill="rgba(255,255,255,0.08)"/>
+  <rect x="240" y="140" width="110" height="6" rx="3" fill="rgba(255,255,255,0.06)"/>
+
+  <!-- ID photo placeholder -->
+  <rect x="240" y="160" width="50" height="60" rx="6" fill="rgba(212,168,83,0.1)" stroke="rgba(212,168,83,0.2)" stroke-width="1"/>
+  <circle cx="265" cy="180" r="12" fill="rgba(212,168,83,0.15)" stroke="rgba(212,168,83,0.3)" stroke-width="1"/>
+  <rect x="252" y="196" width="26" height="14" rx="4" fill="rgba(212,168,83,0.1)"/>
+
+  <!-- Verification checkmark -->
+  <circle cx="355" cy="105" r="16" fill="#D4A853" opacity="0.2"/>
+  <circle cx="355" cy="105" r="12" fill="none" stroke="#D4A853" stroke-width="2"/>
+  <polyline points="348,105 353,110 363,100" fill="none" stroke="#D4A853" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- AI processing nodes - left side -->
+  <circle cx="120" cy="130" r="24" fill="url(#cardGrad)" stroke="rgba(212,168,83,0.3)" stroke-width="1"/>
+  <text x="120" y="135" text-anchor="middle" font-family="monospace" font-size="10" fill="#D4A853">KYC</text>
+
+  <circle cx="100" cy="220" r="24" fill="url(#cardGrad)" stroke="rgba(212,168,83,0.3)" stroke-width="1"/>
+  <text x="100" y="225" text-anchor="middle" font-family="monospace" font-size="10" fill="#D4A853">RISK</text>
+
+  <circle cx="130" cy="310" r="24" fill="url(#cardGrad)" stroke="rgba(212,168,83,0.3)" stroke-width="1"/>
+  <text x="130" y="315" text-anchor="middle" font-family="monospace" font-size="10" fill="#D4A853">DTI</text>
+
+  <!-- AI processing nodes - right side -->
+  <circle cx="480" cy="120" r="24" fill="url(#cardGrad)" stroke="rgba(212,168,83,0.3)" stroke-width="1"/>
+  <text x="480" y="125" text-anchor="middle" font-family="monospace" font-size="10" fill="#D4A853">CIBIL</text>
+
+  <circle cx="500" cy="210" r="24" fill="url(#cardGrad)" stroke="rgba(212,168,83,0.3)" stroke-width="1"/>
+  <text x="500" y="215" text-anchor="middle" font-family="monospace" font-size="9" fill="#D4A853">FRAUD</text>
+
+  <circle cx="470" cy="300" r="24" fill="url(#cardGrad)" stroke="rgba(212,168,83,0.3)" stroke-width="1"/>
+  <text x="470" y="305" text-anchor="middle" font-family="monospace" font-size="10" fill="#D4A853">EMI</text>
+
+  <!-- Connection lines -->
+  <line x1="144" y1="130" x2="220" y2="150" stroke="#D4A853" stroke-width="1" opacity="0.3" stroke-dasharray="4,4"/>
+  <line x1="124" y1="220" x2="220" y2="200" stroke="#D4A853" stroke-width="1" opacity="0.3" stroke-dasharray="4,4"/>
+  <line x1="154" y1="310" x2="220" y2="260" stroke="#D4A853" stroke-width="1" opacity="0.3" stroke-dasharray="4,4"/>
+  <line x1="456" y1="120" x2="380" y2="140" stroke="#D4A853" stroke-width="1" opacity="0.3" stroke-dasharray="4,4"/>
+  <line x1="476" y1="210" x2="380" y2="200" stroke="#D4A853" stroke-width="1" opacity="0.3" stroke-dasharray="4,4"/>
+  <line x1="446" y1="300" x2="380" y2="260" stroke="#D4A853" stroke-width="1" opacity="0.3" stroke-dasharray="4,4"/>
+
+  <!-- Animated pulse dots on lines -->
+  <circle cx="180" cy="140" r="3" fill="#D4A853" opacity="0.6">
+    <animate attributeName="opacity" values="0.2;0.8;0.2" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="420" cy="170" r="3" fill="#D4A853" opacity="0.6">
+    <animate attributeName="opacity" values="0.2;0.8;0.2" dur="2s" begin="0.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="170" cy="265" r="3" fill="#D4A853" opacity="0.6">
+    <animate attributeName="opacity" values="0.2;0.8;0.2" dur="2s" begin="1s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="430" cy="250" r="3" fill="#D4A853" opacity="0.6">
+    <animate attributeName="opacity" values="0.2;0.8;0.2" dur="2s" begin="1.5s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- Score gauge at bottom center -->
+  <rect x="250" y="310" width="100" height="50" rx="8" fill="url(#cardGrad)" stroke="rgba(212,168,83,0.3)" stroke-width="1"/>
+  <text x="300" y="330" text-anchor="middle" font-family="monospace" font-size="8" fill="rgba(255,255,255,0.5)">CREDIT SCORE</text>
+  <text x="300" y="350" text-anchor="middle" font-family="Inter, sans-serif" font-size="18" font-weight="700" fill="#D4A853">782</text>
+</svg>

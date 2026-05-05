@@ -1,0 +1,17 @@
+{
+  "data": {
+    "full_name": "Raj Kumar Sharma",
+    "dob": "1990-05-15",
+    "address": {
+      "house": "B-42",
+      "street": "MG Road",
+      "city": "Mumbai",
+      "state": "Maharashtra",
+      "pincode": "400001"
+    },
+    "photo_link": "base64_photo_placeholder",
+    "gender": "M"
+  },
+  "status_code": 200,
+  "success": true
+}
