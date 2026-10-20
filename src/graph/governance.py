@@ -22,6 +22,7 @@ the graph is returned un-governed and the problem is logged at ERROR, so
 a misconfigured deploy still serves loans while the operator fixes it —
 the dashboard will show the agent silent, which the rogue scanner flags.
 """
+
 from __future__ import annotations
 
 import logging
@@ -69,19 +70,30 @@ def govern_graph(compiled: Any) -> Any:
         from acp import govern  # acp-sdk, see requirements.txt
     except ImportError as e:
         governed_state = False
-        logger.error("ACP_DASHBOARD_URL is set but acp-sdk is not installed (%s); graph runs UNGOVERNED", e)
+        logger.error(
+            "ACP_DASHBOARD_URL is set but acp-sdk is not installed (%s); graph runs UNGOVERNED",
+            e,
+        )
         return compiled
     settings = governance_settings()
     try:
         governed = govern(compiled, **settings)
     except Exception as e:  # noqa: BLE001 — never take the loan app down over governance wiring
         governed_state = False
-        logger.error("acp.govern() failed for %s (%s); graph runs UNGOVERNED", settings["agent_code"], e)
+        logger.error(
+            "acp.govern() failed for %s (%s); graph runs UNGOVERNED",
+            settings["agent_code"],
+            e,
+        )
         return compiled
     governed_state = True
     logger.info(
         "ACP governance active: %s (%s, bu=%s, tier=%s, budget=$%.2f) -> %s",
-        settings["agent_code"], settings["name"], settings["bu"], settings["tier"],
-        settings["budget"], os.environ.get("ACP_DASHBOARD_URL", ""),
+        settings["agent_code"],
+        settings["name"],
+        settings["bu"],
+        settings["tier"],
+        settings["budget"],
+        os.environ.get("ACP_DASHBOARD_URL", ""),
     )
     return governed

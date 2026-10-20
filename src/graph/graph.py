@@ -1,23 +1,23 @@
 """LangGraph StateGraph definition for loan underwriting. 13 nodes across 5 phases."""
 from __future__ import annotations
 
-from langgraph.graph import StateGraph, START, END
+from langgraph.graph import END, START, StateGraph
 
-from src.graph.state import LoanApplicationState
 from src.graph.governance import govern_graph
-from src.graph.nodes.intake import intake_collect_info, intake_loan_details
+from src.graph.nodes.bureau_pull import bureau_pull_node
+from src.graph.nodes.compliance import compliance_node
+from src.graph.nodes.decision import decision_node
 from src.graph.nodes.doc_collection import doc_collection_node
 from src.graph.nodes.doc_verification import doc_verification_node
-from src.graph.nodes.bureau_pull import bureau_pull_node
-from src.graph.nodes.income_verification import income_verification_node
-from src.graph.nodes.risk_assessment import risk_assessment_node
 from src.graph.nodes.fraud_detection import fraud_detection_node
-from src.graph.nodes.score_aggregation import score_aggregation_node
-from src.graph.nodes.compliance import compliance_node
-from src.graph.nodes.pricing import pricing_node
-from src.graph.nodes.decision import decision_node
-from src.graph.nodes.offer_generation import offer_generation_node
 from src.graph.nodes.human_review import human_review_node
+from src.graph.nodes.income_verification import income_verification_node
+from src.graph.nodes.intake import intake_collect_info, intake_loan_details
+from src.graph.nodes.offer_generation import offer_generation_node
+from src.graph.nodes.pricing import pricing_node
+from src.graph.nodes.risk_assessment import risk_assessment_node
+from src.graph.nodes.score_aggregation import score_aggregation_node
+from src.graph.state import LoanApplicationState
 
 
 def _route_after_decision(state: LoanApplicationState) -> str:

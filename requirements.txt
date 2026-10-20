@@ -66,7 +66,6 @@ httpx>=0.28.0
 factory-boy>=3.3.0
 aiosqlite>=0.20.0
 
-# Governance — ACP SDK (Q1-Q37 controls, dashboard heartbeat, pause-gate).
-# Private repo: the Docker build needs a GitHub token (see Dockerfile / README "Governance").
-# Pinned to acp-sdk 0.8.1 (rbi main 2026-10-20). Bump the SHA to upgrade.
-acp-sdk @ git+https://github.com/mahi80/rbi.git@337c8453869b1576a2202113cb7998f2203a04e4#subdirectory=acp-sdk
+# Governance — ACP SDK lives in requirements-governance.txt (private repo install,
+# needs a GitHub token; see README "Governance (ACP)"). Kept out of this file so
+# CI, local dev and ungoverned builds install without secrets.

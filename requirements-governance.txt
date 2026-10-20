@@ -1,0 +1,5 @@
+# ACP governance SDK (Q1-Q37 controls, dashboard heartbeat, pause-gate) — LEN-LOA-01.
+# Private repo: `pip install -r requirements-governance.txt` needs a GitHub token with
+# read access to mahi80/rbi (see README "Governance (ACP)").
+# Pinned to acp-sdk 0.8.1 (rbi main 2026-10-20). Bump the SHA to upgrade.
+acp-sdk @ git+https://github.com/mahi80/rbi.git@337c8453869b1576a2202113cb7998f2203a04e4#subdirectory=acp-sdk

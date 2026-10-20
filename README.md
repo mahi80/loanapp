@@ -3,7 +3,7 @@
 ## Governance (ACP)
 
 The underwriting graph runs under the [ACP](https://github.com/mahi80/rbi) governance SDK
-(acp-sdk 0.8.1, pinned by commit in `requirements.txt`) as agent **LEN-LOA-01** in BU
+(acp-sdk 0.8.1, pinned by commit in `requirements-governance.txt`) as agent **LEN-LOA-01** in BU
 **Lending**. `src/graph/governance.py` wraps the compiled graph with `acp.govern()`; it is a
 no-op unless `ACP_DASHBOARD_URL` is set, so local development and the test suite are unchanged.
 
@@ -35,5 +35,8 @@ echo ghp_xxx > .github_token          # git-ignored
 DOCKER_BUILDKIT=1 docker compose build app
 ```
 
-Without the token the build fails at `pip install` — remove the `acp-sdk` line from
-`requirements.txt` to build an ungoverned image.
+Without the token the build still succeeds but **ungoverned** (the Dockerfile prints a warning);
+pass `--build-arg ACP_GOVERNANCE=required` for production images so a missing token fails the
+build instead. CI installs the SDK and builds the governed image only when the repository secret
+`GH_READ_TOKEN` is set. For a local venv: `pip install -r requirements-governance.txt` with the
+same token configured in git.

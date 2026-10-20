@@ -10,17 +10,27 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-# Python dependencies. acp-sdk is installed from the private mahi80/rbi repo:
-# pass a token as a BuildKit secret so it never lands in an image layer —
-#   DOCKER_BUILDKIT=1 docker build --secret id=github_token,src=$HOME/.github_token .
-#   (compose: `secrets: [github_token]` on the build, see docker-compose.yml)
-COPY requirements.txt .
+# Python dependencies.
+COPY requirements.txt requirements-governance.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+# ACP governance SDK (private mahi80/rbi). Pass a GitHub token as a BuildKit secret
+# so it never lands in an image layer:
+#   echo ghp_xxx > .github_token && DOCKER_BUILDKIT=1 docker compose build app
+# ACP_GOVERNANCE=required makes the build fail without the token (use for prod images);
+# the default `auto` builds an ungoverned image and says so loudly.
+ARG ACP_GOVERNANCE=auto
 RUN --mount=type=secret,id=github_token,required=false \
     if [ -s /run/secrets/github_token ]; then \
-      git config --global url."https://$(cat /run/secrets/github_token)@github.com/".insteadOf "https://github.com/"; \
-    fi \
-    && pip install --no-cache-dir -r requirements.txt \
-    && rm -f /root/.gitconfig
+      git config --global url."https://$(cat /run/secrets/github_token)@github.com/".insteadOf "https://github.com/" \
+      && pip install --no-cache-dir -r requirements-governance.txt \
+      && rm -f /root/.gitconfig \
+      && python -c "import acp; print('acp-sdk', acp.__version__, 'installed')"; \
+    elif [ "$ACP_GOVERNANCE" = "required" ]; then \
+      echo "ERROR: ACP_GOVERNANCE=required but no github_token secret was provided" >&2; exit 1; \
+    else \
+      echo "WARNING: no github_token secret — building WITHOUT acp-sdk (graph runs ungoverned)" >&2; \
+    fi
 
 # Application code
 COPY src/ ./src/

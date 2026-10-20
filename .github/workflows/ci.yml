@@ -73,6 +73,21 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
+      # Optional: install the private acp-sdk when the repo has a GH_READ_TOKEN secret
+      # (a PAT with read access to mahi80/rbi). Without it the governance tests still
+      # run — src/graph/governance.py is env-gated and tested with a fake SDK.
+      - name: Install ACP governance SDK (if GH_READ_TOKEN is set)
+        env:
+          GH_READ_TOKEN: ${{ secrets.GH_READ_TOKEN }}
+        run: |
+          if [ -n "$GH_READ_TOKEN" ]; then
+            git config --global url."https://${GH_READ_TOKEN}@github.com/".insteadOf "https://github.com/"
+            pip install -r requirements-governance.txt
+            python -c "import acp; print('acp-sdk', acp.__version__)"
+          else
+            echo "GH_READ_TOKEN not set — skipping acp-sdk install"
+          fi
+
       - name: Run tests
         run: pytest tests/ -v --tb=short -x
 
@@ -81,8 +96,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Builds with the acp-sdk when GH_READ_TOKEN is configured, ungoverned otherwise
+      # (the Dockerfile prints which). Set the secret to make CI prove the governed image.
       - name: Build Docker image
-        run: docker build -t loan-underwriting:test .
+        env:
+          GH_READ_TOKEN: ${{ secrets.GH_READ_TOKEN }}
+        run: |
+          printf '%s' "$GH_READ_TOKEN" > /tmp/github_token
+          DOCKER_BUILDKIT=1 docker build --secret id=github_token,src=/tmp/github_token -t loan-underwriting:test .
+          rm -f /tmp/github_token
 
       - name: Verify image
         run: docker run --rm loan-underwriting:test python -c "from src.config import Settings; print('OK')"

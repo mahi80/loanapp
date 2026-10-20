@@ -1,4 +1,5 @@
 """ACP governance wiring (src/graph/governance.py) — env-gated, never breaks the graph."""
+
 from __future__ import annotations
 
 import sys
@@ -11,8 +12,18 @@ from src.graph import governance
 
 @pytest.fixture(autouse=True)
 def _reset(monkeypatch):
-    for var in ("ACP_DASHBOARD_URL", "ACP_API_KEY", "ACP_AGENT_CODE", "ACP_AGENT_NAME", "ACP_BU",
-                "ACP_BUDGET", "ACP_TIER", "ACP_GOVERN", "ACP_PROCESS_NAME", "ACP_PROCESS_TYPE"):
+    for var in (
+        "ACP_DASHBOARD_URL",
+        "ACP_API_KEY",
+        "ACP_AGENT_CODE",
+        "ACP_AGENT_NAME",
+        "ACP_BU",
+        "ACP_BUDGET",
+        "ACP_TIER",
+        "ACP_GOVERN",
+        "ACP_PROCESS_NAME",
+        "ACP_PROCESS_TYPE",
+    ):
         monkeypatch.delenv(var, raising=False)
     governance.governed_state = None
     yield
@@ -47,12 +58,15 @@ def test_governs_with_defaults_when_dashboard_url_set(monkeypatch):
     graph = object()
     out = governance.govern_graph(graph)
     assert out == ("governed", graph) and governance.governed_state is True
-    (agent, kw), = calls
+    ((agent, kw),) = calls
     assert agent is graph
     assert kw["agent_code"] == "LEN-LOA-01"
     assert kw["name"] == "lending-loan-processing-disbursement"
     assert kw["bu"] == "Lending" and kw["budget"] == 5.0 and kw["tier"] == "TIER_2"
-    assert kw["process_name"] == "loan-underwriting" and kw["process_type"] == "customer-facing"
+    assert (
+        kw["process_name"] == "loan-underwriting"
+        and kw["process_type"] == "customer-facing"
+    )
     assert kw["framework"] == "langgraph"
 
 
@@ -80,7 +94,7 @@ def test_acp_govern_zero_forces_off(monkeypatch):
 
 
 def test_missing_sdk_logs_and_returns_ungoverned(monkeypatch, caplog):
-    monkeypatch.setitem(sys.modules, "acp", None)      # import acp -> ImportError
+    monkeypatch.setitem(sys.modules, "acp", None)  # import acp -> ImportError
     monkeypatch.setenv("ACP_DASHBOARD_URL", "https://dash.test")
     graph = object()
     with caplog.at_level("ERROR"):
