@@ -55,3 +55,6 @@ logs/
 # Alembic
 alembic/versions/__pycache__/
 .superpowers/
+
+# GitHub PAT used only at docker build time for the private acp-sdk install
+.github_token

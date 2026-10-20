@@ -3,6 +3,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      secrets:
+        - github_token          # read access to mahi80/rbi for the acp-sdk install
     ports:
       - "8000:8000"
     volumes:
@@ -13,6 +15,14 @@ services:
     environment:
       - DATABASE_URL=postgresql+asyncpg://loan:loan@postgres:5432/loan_underwriting
       - REDIS_URL=redis://redis:6379
+      # ACP governance (LEN-LOA-01). Leave ACP_DASHBOARD_URL empty to run ungoverned.
+      - ACP_DASHBOARD_URL=${ACP_DASHBOARD_URL:-}
+      - ACP_API_KEY=${ACP_API_KEY:-}
+      - ACP_AGENT_CODE=${ACP_AGENT_CODE:-LEN-LOA-01}
+      - ACP_AGENT_NAME=${ACP_AGENT_NAME:-lending-loan-processing-disbursement}
+      - ACP_BU=${ACP_BU:-Lending}
+      - ACP_BUDGET=${ACP_BUDGET:-5.0}
+      - ACP_TIER=${ACP_TIER:-TIER_2}
     depends_on:
       postgres:
         condition: service_healthy
@@ -77,3 +87,7 @@ volumes:
 networks:
   loan-network:
     driver: bridge
+
+secrets:
+  github_token:
+    file: ${GITHUB_TOKEN_FILE:-./.github_token}   # one line: a GitHub PAT with read access to mahi80/rbi

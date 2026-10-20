@@ -4,6 +4,7 @@ from __future__ import annotations
 from langgraph.graph import StateGraph, START, END
 
 from src.graph.state import LoanApplicationState
+from src.graph.governance import govern_graph
 from src.graph.nodes.intake import intake_collect_info, intake_loan_details
 from src.graph.nodes.doc_collection import doc_collection_node
 from src.graph.nodes.doc_verification import doc_verification_node
@@ -88,5 +89,7 @@ def build_graph(checkpointer=None):
         checkpointer=checkpointer,
         interrupt_after=["offer_generation", "human_review"],
     )
+    # ACP governance (LEN-LOA-01): no-op unless ACP_DASHBOARD_URL is set.
+    compiled = govern_graph(compiled)
     _compiled_graph_cache[cache_key] = compiled
     return compiled
