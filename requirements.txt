@@ -65,3 +65,7 @@ pytest-cov>=6.0.0
 httpx>=0.28.0
 factory-boy>=3.3.0
 aiosqlite>=0.20.0
+
+# Governance — ACP SDK lives in requirements-governance.txt (private repo install,
+# needs a GitHub token; see README "Governance (ACP)"). Kept out of this file so
+# CI, local dev and ungoverned builds install without secrets.
